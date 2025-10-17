@@ -1,0 +1,94 @@
+/*
+  This custom CSS is for the 3D carousel animation.
+  We create a 3D space and arrange items in a circle.
+*/
+.scene {
+    perspective: 1000px;
+}
+
+.carousel {
+    width: 288px; /* w-72 */
+    height: 256px; /* h-64 */
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 1s cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.carousel-item {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    transition: opacity 1s ease, transform 1s ease;
+}
+
+/* Arrange the 5 cards in a pentagon shape around a central point */
+.carousel-item:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
+.carousel-item:nth-child(2) { transform: rotateY(72deg) translateZ(300px); }
+.carousel-item:nth-child(3) { transform: rotateY(144deg) translateZ(300px); }
+.carousel-item:nth-child(4) { transform: rotateY(216deg) translateZ(300px); }
+.carousel-item:nth-child(5) { transform: rotateY(288deg) translateZ(300px); }
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+  100% { transform: translateY(0px); }
+}
+.animate-float {
+  animation: float 5s ease-in-out infinite;
+}
+
+.gender-btn { 
+    background-color: transparent; 
+    color: #374151; 
+}
+.gender-btn.active { 
+    background-color: #f59e0b; 
+    border-color: #f59e0b; 
+    color: white; 
+    font-weight: 600; 
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator { 
+    cursor: pointer; 
+}
+
+.form-step { 
+    animation: fadeIn 0.5s ease-in-out; 
+}
+@keyframes fadeIn { 
+    from { opacity: 0; transform: translateY(10px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+/* Base styles from the original file */
+:root {
+    --accent: #FF8A00;
+    --accent-2: #FFD166;
+}
+
+body {
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+    background-color: #fdf8f0; /* A warm off-white */
+    background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Small utility animations */
+.glow { 
+    box-shadow: 0 8px 30px rgba(255,138,0,0.18); 
+}
+
+.flicker { 
+    animation: flicker 2.8s infinite; 
+}
+@keyframes flicker { 
+    0% { opacity:.98 } 
+    50% { opacity:.85 } 
+    100% { opacity:.98 } 
+}
+
+.wave-reveal {
+    clip-path: polygon(0 20%, 100% 0, 100% 100%, 0% 100%);
+}
