@@ -363,7 +363,7 @@ const Carddetails = () => {
                 {/* ... other FAQs ... */}
             </div>
           </div>
-          {/* ... other info sections ... */}
+        
         </section>
 
         {/* Related Carousel Section */}
