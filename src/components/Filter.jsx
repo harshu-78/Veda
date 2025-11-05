@@ -52,6 +52,10 @@ const SankalpIcon = ({ className }) => <svg className={className} xmlns="http://
 function PujaCard({ puja }) {
     const endsInDays = useMemo(() => Math.floor(2 + Math.random() * 10), []);
 
+    const linkPath = puja.category === 'upcoming' 
+        ? `/upcoming-puja/${puja.id}`   
+        : `/pujas/${puja.id}`;         
+
     return (
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200/80 flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
             <div className="relative">
@@ -68,7 +72,8 @@ function PujaCard({ puja }) {
             <div className="p-4 flex flex-col flex-grow">
                 <h3 className="text-lg font-bold text-gray-800 leading-tight mb-4 flex-grow">{puja.title}</h3>
                 <div className="mt-auto">
-                    <Link to={`/pujas/${puja.id}`}>
+                  
+                    <Link to={linkPath}>
                         <button className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-3 px-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.03]">
                             {puja.category === 'upcoming' ? 'Participate Now' : 'Book Now'}
                         </button>

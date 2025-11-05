@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import AOS from 'aos';
-import 'aos/dist/aos.css'; // Make sure to npm install aos
+import 'aos/dist/aos.css'; 
+
 
 const Upcoming = () => {
   // State for all dynamic parts of the page
@@ -9,6 +10,7 @@ const Upcoming = () => {
     src: 'images/main iamge.jpg',
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [participantCount, setParticipantCount] = useState(1); 
   const [isShareOpen, setIsShareOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [isFavorite, setIsFavorite] = useState(false);
@@ -17,7 +19,6 @@ const Upcoming = () => {
   const [isGotraDisabled, setIsGotraDisabled] = useState(false);
   const [showPrasad, setShowPrasad] = useState(false);
 
-  // Refs for elements we need to interact with directly
   const carouselRef = useRef(null);
   const pageLinkRef = useRef(null);
 
@@ -130,7 +131,13 @@ const Upcoming = () => {
     }
   };
 
-  // Modal form: "I don't know my Gotra" checkbox
+  // Modal: Open modal and set participant count
+  const openModalWithParticipants = (count) => {
+    setParticipantCount(count);
+    setIsModalOpen(true);
+  };
+
+  // Modal: "I don't know my Gotra" checkbox
   const handleGotraCheck = (e) => {
     if (e.target.checked) {
       setGotra('Kashyap');
@@ -141,12 +148,12 @@ const Upcoming = () => {
     }
   };
 
-  // Modal form: Prasad toggle
+  // Modal: Prasad toggle
   const handlePrasadToggle = (e) => {
     setShowPrasad(e.target.checked);
   };
 
-  // Modal form: Next button
+  // Modal: Next button
   const handleFormNext = () => {
     alert('Proceeding to Review Cart...');
     // Add your redirection or next step logic here
@@ -164,11 +171,22 @@ const Upcoming = () => {
     }
   };
 
+  // Helper to render dynamic participant inputs
+  const renderParticipantInputs = () => {
+    return Array.from({ length: participantCount }, (_, i) => (
+      <input
+        key={i}
+        type="text"
+        placeholder={`Participant ${i + 1} *`}
+        required
+        className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400"
+      />
+    ));
+  };
+
   return (
     <>
-      {/* This <style> tag is copied directly from your HTML.
-        This is valid in React and ensures styles are "exactly same".
-      */}
+     
       <style>{`
         .gold-text { background: linear-gradient(90deg,#f59e0b,#d97706); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
         .glass { background: rgba(255,255,255,.85); backdrop-filter: blur(12px); }
@@ -176,17 +194,14 @@ const Upcoming = () => {
         @keyframes spin { to { transform: rotate(360deg); } }
         @keyframes fadeSlide { from {opacity:0; transform: translateY(10px)} to {opacity:1; transform: translateY(0)} }
         .fadeSlide { animation: fadeSlide .5s ease; }
-        
-        /* Hide scrollbar for carousel */
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
 
+    
       <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-orange-50 to-yellow-100 text-gray-800">
         <div className="pointer-events-none fixed -top-24 -left-24 w-72 h-72 bg-yellow-300/40 blur-3xl rounded-full"></div>
         <div className="pointer-events-none fixed -bottom-24 -right-24 w-72 h-72 bg-orange-300/40 blur-3xl rounded-full"></div>
 
-        <nav className="max-w-7xl mx-auto px-6 pt-6 text-sm text-gray-600 flex items-center gap-2 flex-wrap">
+        <nav className="max-w-7xl mx-auto px-6 pt-6 text-sm text-gray-600 flex items-center gap-2">
           <a className="font-medium hover:text-yellow-700 transition" href="#">
             Home
           </a>
@@ -202,19 +217,22 @@ const Upcoming = () => {
           <span className="font-semibold text-red-600">Adi Lakshmi Puja</span>
         </nav>
 
+        {/* Main Section */}
         <section className="max-w-7xl mx-auto p-6 md:p-8 grid lg:grid-cols-2 gap-8">
           <div className="space-y-4">
             <div
               id="mainDisplay"
-              className="relative rounded-2xl shimmer soft-border w-full aspect-[6/5] overflow-hidden group"
+              className="relative rounded-2xl shimmer soft-border w-full h-[500px] aspect-[6/5] overflow-hidden group"
             >
+              {/* This part is now controlled by React state */}
               {mainDisplay.type === 'img' ? (
                 <img
+                  id="mainImage"
                   src={mainDisplay.src}
                   alt="Product Image"
-                  className="w-full h-full object-cover transition duration-700 group-hover:scale-[1.03]"
+                  className="w-full h-full object-cover transition duration-700 group-hover:scale-[1.03] flex space-x-3"
                   data-aos="zoom-in"
-                  key={mainDisplay.src} // Add key to force re-render on src change
+                  key={mainDisplay.src}
                 />
               ) : (
                 <video
@@ -223,29 +241,30 @@ const Upcoming = () => {
                   muted
                   playsInline
                   className="w-full h-full object-cover rounded-2xl"
-                  key={mainDisplay.src} // Add key
+                  key={mainDisplay.src}
                 >
                   <source src={mainDisplay.src} type="video/mp4" />
                 </video>
               )}
             </div>
 
+            {/* Thumbnails row */}
             <div
               id="thumbRow"
-              className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-7 gap-3"
+              className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-7 gap-3 flex space-x-3"
               data-aos="zoom-in"
             >
               <img
                 src="images/main iamge.jpg"
                 className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
-                onClick={(e) => handleThumbClick(e.target)}
                 alt="thumbnail"
+                onClick={(e) => handleThumbClick(e.target)}
               />
               <img
                 src="images/m2.jpg"
                 className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
-                onClick={(e) => handleThumbClick(e.target)}
                 alt="thumbnail"
+                onClick={(e) => handleThumbClick(e.target)}
               />
               <video
                 src="images/video1.mp4"
@@ -256,19 +275,20 @@ const Upcoming = () => {
               <img
                 src="images/bagagalmukhi yantra.webp"
                 className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
-                onClick={(e) => handleThumbClick(e.target)}
                 alt="thumbnail"
+                onClick={(e) => handleThumbClick(e.target)}
               />
               <img
                 src="images/B-Y2.webp"
                 className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
-                onClick={(e) => handleThumbClick(e.target)}
                 alt="thumbnail"
+                onClick={(e) => handleThumbClick(e.target)}
               />
             </div>
           </div>
 
-          <div className="glass soft-border rounded-2xl w-full p-6 md:p-8 fadeSlide">
+          {/* Product Details Card */}
+          <div className="glass soft-border rounded-2xl w-full h-[500px] p-6 md:p-8 fadeSlide">
             <div
               className="flex items-start justify-between gap-4 glass rounded-2xl p-6"
               data-aos="fade-left"
@@ -278,7 +298,7 @@ const Upcoming = () => {
                   Yagya Puja
                 </p>
                 <h1
-                  className="text-3xl md:text-4xl font-extrabold mt-1 gold-text mb-6"
+                  className="text-3xl md:text-4xl font-extrabold mt-1 gold-text text-3xl font-extrabold gold-text mb-6"
                   data-aos="fade-down"
                 >
                   Adi Lakshmi Puja
@@ -316,15 +336,17 @@ const Upcoming = () => {
               </div>
             </div>
 
-            <div className="mt-4 bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-800 px-4 py-3 rounded-xl shadow flex flex-col sm:flex-row items-center justify-between gap-3">
-              <div className="font-semibold text-center sm:text-left">
-                Booking: 01/11/25 – 20/11/25
+            {/* Offer countdown */}
+            <div className="mt-4 bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-800 px-4 py-3 rounded-xl shadow flex items-center justify-between gap-3">
+              <div className="font-semibold">
+                Booking closes in: 01/11/25 – 20/11/25
               </div>
               <div id="countdown" className="text-xs font-bold">
                 {countdown}
               </div>
             </div>
 
+            {/* Trust badges */}
             <div className="mt-4 grid grid-cols-3 gap-3 text-center text-xs">
               <div className="bg-white rounded-xl border p-3 hover:scale-105 hover:shadow-md hover:bg-yellow-500">
                 ✅ Certified Priests
@@ -338,9 +360,10 @@ const Upcoming = () => {
             </div>
 
             <a href="#participate-section">
+              {' '}
               <button
                 id="bookBtn"
-                className="mt-6 w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-amber-300/40 transition transform active:scale-[.98] hover:scale-105 hover:shadow-mdc"
+                className="mt-6 w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-amber-300/40 transition transform active:scale-[.98] hover:scale-105 hover:shadow-mdc hover:bg-orange-700"
               >
                 Participate in Puja
               </button>
@@ -350,15 +373,15 @@ const Upcoming = () => {
 
         <h3
           id="participate-section"
-          className="text-3xl md:text-4xl font-extrabold gold-text text-center mt-9 px-4"
+          className=" text-4xl font-extrabold gold-text text-center mt-9"
         >
           4 Ways to Participate
         </h3>
 
-        <div className="mt-8 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 md:px-6">
-          {/* --- Card 1 (with Modal) --- */}
-          <div className="max-w-sm mx-auto w-full">
-            <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white h-full flex flex-col">
+        <div className=" mt-8 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 md:px-6">
+          {/* Card 1 */}
+          <div className="max-w-sm mx-auto">
+            <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
               <div className="bg-gradient-to-r from-red-600 to-orange-500 text-white p-4 text-left">
                 <h3 className="text-lg font-semibold">
                   Individual Lakshmi Puja
@@ -367,10 +390,10 @@ const Upcoming = () => {
                 <img
                   src="one_family.avif"
                   alt="Individual"
-                  className="rounded-lg mt-3 w-full h-auto object-cover"
+                  className="rounded-lg mt-3"
                 />
               </div>
-              <div className="p-5 space-y-3 text-gray-700 text-sm flex-grow">
+              <div className="p-5 space-y-3 text-gray-700 text-sm">
                 <p>🔸 Link for Recorded video of Lakshmi Puja</p>
                 <p>
                   🔸 Individual’s Name and Gotra will be chanted during the Puja
@@ -382,11 +405,11 @@ const Upcoming = () => {
                 </p>
                 <p>🔸 Prasad will be shipped to your home</p>
               </div>
-              <div className="p-4 text-center mt-auto">
+              <div className="p-4 text-center">
                 <button
-                  id="openModalBtn"
-                  className="bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
-                  onClick={() => setIsModalOpen(true)}
+                  data-participants="1"
+                  className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
+                  onClick={() => openModalWithParticipants(1)}
                 >
                   PARTICIPATE
                 </button>
@@ -394,99 +417,105 @@ const Upcoming = () => {
             </div>
           </div>
 
-          {/* --- Card 2 --- */}
-          <div className="max-w-sm mx-auto w-full">
-            <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white h-full flex flex-col">
-              <div className="bg-gradient-to-r from-pink-600 to-orange-500 text-white p-4 text-left">
-                <h3 className="text-lg font-semibold">Couple Lakshmi Puja</h3>
-                <p className="text-xl font-bold mt-1">₹1251</p>
-                <img
-                  src="two_family.avif"
-                  alt="Couple"
-                  className="rounded-lg mt-3 w-full h-auto object-cover"
-                />
-              </div>
-              <div className="p-5 space-y-3 text-gray-700 text-sm flex-grow">
-                <p>🔸 Link for Recorded video of Lakshmi Puja</p>
-                <p>
-                  🔸 2 Devotee Name and Gotra will be chanted during the Puja
-                  Sankalp
-                </p>
-                <p>
-                  🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and
-                  the video of the Offerings will be shared with you
-                </p>
-                <p>🔸 Prasad will be shipped to your home</p>
-              </div>
-              <div className="p-4 text-center mt-auto">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition">
-                  PARTICIPATE
-                </button>
-              </div>
+          {/* Card 2 */}
+          <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
+            <div className="bg-gradient-to-r from-pink-600 to-orange-500 text-white p-4 text-left">
+              <h3 className="text-lg font-semibold">Couple Lakshmi Puja</h3>
+              <p className="text-xl font-bold mt-1">₹1251</p>
+              <img
+                src="two_family.avif"
+                alt="Couple"
+                className="rounded-lg mt-3"
+              />
+            </div>
+            <div className="p-5 space-y-3 text-gray-700 text-sm">
+              <p>🔸 Link for Recorded video of Lakshmi Puja</p>
+              <p>
+                🔸 2 Devotee Name and Gotra will be chanted during the Puja
+                Sankalp
+              </p>
+              <p>
+                🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and the
+                video of the Offerings will be shared with you
+              </p>
+              <p>🔸 Prasad will be shipped to your home</p>
+            </div>
+            <div className="p-4 text-center">
+              <button
+                data-participants="2"
+                className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
+                onClick={() => openModalWithParticipants(2)}
+              >
+                PARTICIPATE
+              </button>
             </div>
           </div>
 
-          {/* --- Card 3 --- */}
-          <div className="max-w-sm mx-auto w-full">
-            <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white h-full flex flex-col">
-              <div className="bg-gradient-to-r from-orange-600 to-red-400 text-white p-4 text-left">
-                <h3 className="text-lg font-semibold">Family Lakshmi Puja</h3>
-                <p className="text-xl font-bold mt-1">₹1451</p>
-                <img
-                  src="four_family.avif"
-                  alt="Family"
-                  className="rounded-lg mt-3 w-full h-auto object-cover"
-                />
-              </div>
-              <div className="p-5 space-y-3 text-gray-700 text-sm flex-grow">
-                <p>🔸 Link for Recorded video of Lakshmi Puja</p>
-                <p>
-                  🔸 4 Devotee Name and Gotra will be chanted during the Puja
-                  Sankalp
-                </p>
-                <p>
-                  🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and
-                  the video of the Offerings will be shared with you
-                </p>
-                <p>🔸 Prasad will be shipped to your home</p>
-              </div>
-              <div className="p-4 text-center mt-auto">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition">
-                  PARTICIPATE
-                </button>
-              </div>
+          {/* Card 3 */}
+          <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
+            <div className="bg-gradient-to-r from-orange-600 to-red-400 text-white p-4 text-left">
+              <h3 className="text-lg font-semibold">Family Lakshmi Puja</h3>
+              <p className="text-xl font-bold mt-1">₹1451</p>
+              <img
+                src="four_family.avif"
+                alt="Family"
+                className="rounded-lg mt-3"
+              />
+            </div>
+            <div className="p-5 space-y-3 text-gray-700 text-sm">
+              <p>🔸 Link for Recorded video of Lakshmi Puja</p>
+              <p>
+                🔸 4 Devotee Name and Gotra will be chanted during the Puja
+                Sankalp
+              </p>
+              <p>
+                🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and the
+                video of the Offerings will be shared with you
+              </p>
+              <p>🔸 Prasad will be shipped to your home</p>
+            </div>
+            <div className="p-4 text-center">
+              <button
+                data-participants="4"
+                className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
+                onClick={() => openModalWithParticipants(4)}
+              >
+                PARTICIPATE
+              </button>
             </div>
           </div>
 
-          {/* --- Card 4 --- */}
-          <div className="max-w-sm mx-auto w-full">
-            <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white h-full flex flex-col">
-              <div className="bg-gradient-to-r from-orange-600 to-red-400 text-white p-4 text-left">
-                <h3 className="text-lg font-semibold">Family Lakshmi Puja</h3>
-                <p className="text-xl font-bold mt-1">₹1451</p>
-                <img
-                  src="six_family.avif"
-                  alt="Family"
-                  className="rounded-lg mt-3 w-full h-auto object-cover"
-                />
-              </div>
-              <div className="p-5 space-y-3 text-gray-700 text-sm flex-grow">
-                <p>🔸 Link for Recorded video of Lakshmi Puja</p>
-                <p>
-                  🔸 6 Devotee Name and Gotra will be chanted during the Puja
-                  Sankalp
-                </p>
-                <p>
-                  🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and
-                  the video of the Offerings will be shared with you
-                </p>
-                <p>🔸 Prasad will be shipped to your home</p>
-              </div>
-              <div className="p-4 text-center mt-auto">
-                <button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition">
-                  PARTICIPATE
-                </button>
-              </div>
+          {/* Card 4 */}
+          <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
+            <div className="bg-gradient-to-r from-orange-600 to-red-400 text-white p-4 text-left">
+              <h3 className="text-lg font-semibold">Family Lakshmi Puja</h3>
+              <p className="text-xl font-bold mt-1">₹1451</p>
+              <img
+                src="six_family.avif"
+                alt="Family"
+                className="rounded-lg mt-3"
+              />
+            </div>
+            <div className="p-5 space-y-3 text-gray-700 text-sm">
+              <p>🔸 Link for Recorded video of Lakshmi Puja</p>
+              <p>
+                🔸 6 Devotee Name and Gotra will be chanted during the Puja
+                Sankalp
+              </p>
+              <p>
+                🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and the
+                video of the Offerings will be shared with you
+              </p>
+              <p>🔸 Prasad will be shipped to your home</p>
+            </div>
+            <div className="p-4 text-center">
+              <button
+                data-participants="6"
+                className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
+                onClick={() => openModalWithParticipants(6)}
+              >
+                PARTICIPATE
+              </button>
             </div>
           </div>
         </div>
@@ -494,23 +523,21 @@ const Upcoming = () => {
         {/* --- Form Modal --- */}
         <div
           id="formModal"
-          className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50 ${
+          className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${
             isModalOpen ? '' : 'hidden'
-          }`}
+          } bg-black/20 backdrop-blur-sm`}
           onClick={(e) => {
-            // Close modal on backdrop click
             if (e.target.id === 'formModal') setIsModalOpen(false);
           }}
         >
           <div className="relative bg-white rounded-lg shadow-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto">
             <button
               id="closeModalBtn"
-              className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold z-10"
+              className="absolute top-3 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold"
               onClick={() => setIsModalOpen(false)}
             >
               &times;
             </button>
-
             <div className="w-full flex items-center justify-center border-b bg-white shadow-sm sticky top-0 z-50 rounded-t-lg">
               <div className="flex items-center justify-center space-x-6 p-3 text-sm md:text-base">
                 <div className="flex items-center space-x-2 text-orange-500 font-semibold">
@@ -521,14 +548,13 @@ const Upcoming = () => {
                 </div>
               </div>
             </div>
-
             <form className="max-w-3xl mx-auto bg-white rounded-xl p-6 md:p-10 space-y-6">
               <div>
                 <label className="font-semibold text-lg flex items-center gap-2">
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg"
                     className="w-5 h-5"
-                    alt="WhatsApp"
+                    alt=""
                   />
                   WhatsApp Mobile Number
                 </label>
@@ -544,19 +570,13 @@ const Upcoming = () => {
                   />
                 </div>
               </div>
-
               <div>
                 <h3 className="font-semibold text-lg mb-2">Add Participants</h3>
-                <div className="space-y-3">
-                  <input
-                    type="text"
-                    placeholder="Participant 1 *"
-                    className="w-full border rounded-lg px-3 py-2 focus:ring-2 focus:ring-orange-400"
-                    required
-                  />
+                {/* This div is now dynamically filled by React */}
+                <div className="space-y-3" id="participant-inputs-container">
+                  {renderParticipantInputs()}
                 </div>
               </div>
-
               <div>
                 <h3 className="font-semibold text-lg mb-2">Add Gotra</h3>
                 <input
@@ -580,17 +600,16 @@ const Upcoming = () => {
                   I don’t know my Gotra
                 </label>
               </div>
-
               <div>
                 <h3 className="font-semibold text-lg mb-2">
                   Do you want the Prasad to be Delivered?
                 </h3>
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between border rounded-lg px-4 py-3 gap-3">
+                <div className="flex items-center justify-between border rounded-lg px-4 py-3">
                   <p className="text-sm text-gray-600">
                     Note: Prasad will be delivered within 10 days of the
                     puja/offering.
                   </p>
-                  <label className="inline-flex items-center cursor-pointer flex-shrink-0">
+                  <label className="inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
                       className="sr-only peer"
@@ -602,7 +621,6 @@ const Upcoming = () => {
                     </div>
                   </label>
                 </div>
-
                 <div
                   id="prasadFields"
                   className={`mt-4 space-y-4 ${showPrasad ? '' : 'hidden'}`}
@@ -643,7 +661,6 @@ const Upcoming = () => {
                       </label>
                     </div>
                   </div>
-
                   <div className="space-y-3">
                     <input
                       type="text"
@@ -670,7 +687,6 @@ const Upcoming = () => {
                   </div>
                 </div>
               </div>
-
               <div>
                 <button
                   type="button"
@@ -685,14 +701,14 @@ const Upcoming = () => {
           </div>
         </div>
 
-        {/* --- Main Content Sections --- */}
-        <section className="mt-6 max-w-7xl mx-auto px-6 md:px-8 pb-16">
+        {/* Info Tabs (About/Benefits/FAQ/Shipping/Reviews) */}
+        <section className=" mt-6 max-w-7xl mx-auto px-6 md:px-8 pb-16">
           <div className="grid md:grid-cols-3 gap-6">
             <div
-              className="md:col-span-3 glass soft-border rounded-2xl p-6"
+              className="md:col-span-3 glass soft-border rounded-2xl p-6 glass rounded-2xl p-6"
               data-aos="fade-left"
             >
-              <h3 className="text-2xl md:text-3xl font-extrabold gold-text text-center mb-3">
+              <h3 className="text-3xl font-extrabold gold-text text-center mb-3">
                 About the Puja
               </h3>
               <h5 className="text-lg font-semibold">Adi Lakshmi Puja </h5>
@@ -775,8 +791,9 @@ const Upcoming = () => {
                 </ul>
               </ul>
               <blockquote className="mt-4 border-l-4 border-yellow-500 pl-4 italic text-red-600 font-semibold">
-                <h5 className="text-lg font-semibold text-black ">Rituals:</h5>
-                <p className="text-black">chant this Mantra</p>॥ ओं श्रीं ह्रीं
+                {' '}
+                <h5 className="text-lg font-semibold text-black ">Rituals:</h5>{' '}
+                <p className="text-black">chant this Mantra</p> ॥ ओं श्रीं ह्रीं
                 क्लीं आदि लक्ष्म्यै नमः ॥
               </blockquote>
             </div>
@@ -784,10 +801,10 @@ const Upcoming = () => {
 
           <div className="grid md:grid-cols-3 mt-4 gap-6">
             <div
-              className="md:col-span-3 glass soft-border rounded-2xl p-6"
+              className="md:col-span-3 glass soft-border rounded-2xl p-6 glass rounded-2xl p-6"
               data-aos="fade-left"
             >
-              <h3 className="text-2xl md:text-3xl font-extrabold gold-text text-center mb-3">
+              <h3 className="text-3xl font-extrabold gold-text text-center mb-3">
                 Benefits
               </h3>
               <ul className="list-disc list-inside space-y-2 text-sm">
@@ -816,10 +833,10 @@ const Upcoming = () => {
 
           <div className="grid md:grid-cols-3 mt-4 gap-6">
             <div
-              className="md:col-span-3 glass soft-border rounded-2xl p-6"
+              className="md:col-span-3 glass soft-border rounded-2xl p-6 glass rounded-2xl p-6"
               data-aos="fade-left"
             >
-              <h3 className="text-2xl md:text-3xl font-extrabold text-center gold-text mb-3">
+              <h3 className="text-3xl font-extrabold text-center gold-text mb-3">
                 Puja Process
               </h3>
               <ul className="list-disc list-inside space-y-2 text-sm">
@@ -845,10 +862,10 @@ const Upcoming = () => {
 
           <div className="grid md:grid-cols-3 mt-4 gap-6">
             <div
-              className="md:col-span-3 glass soft-border rounded-2xl p-6"
+              className="md:col-span-3 glass soft-border rounded-2xl p-6 glass rounded-2xl p-6"
               data-aos="fade-left"
             >
-              <h3 className="text-2xl md:text-3xl font-extrabold text-center gold-text mb-3">
+              <h3 className="text-3xl font-extrabold text-center gold-text mb-3">
                 FAQ
               </h3>
               <details className="border rounded-lg mb-2 p-3 bg-white/70">
@@ -875,7 +892,7 @@ const Upcoming = () => {
                 </summary>
                 <p className="mt-2 text-sm">
                   Lotus flowers, cow ghee lamps, sweets, and gold or silver
-                  coins are considered auspicious.
+                  coins are considered auspicious.{' '}
                 </p>
               </details>
               <details className="border rounded-lg mb-2 p-3 bg-white/70">
@@ -888,7 +905,8 @@ const Upcoming = () => {
               </details>
               <details className="border rounded-lg mb-2 p-3 bg-white/70">
                 <summary className="cursor-pointer font-semibold">
-                  Can the puja be done at home?
+                  {' '}
+                  Can the puja be done at home?{' '}
                 </summary>
                 <p className="mt-2 text-sm">
                   Yes, Adi Lakshmi Puja can be performed at home with devotion
@@ -900,10 +918,10 @@ const Upcoming = () => {
 
           <div className="grid md:grid-cols-3 mt-4 gap-6">
             <div
-              className="md:col-span-3 glass soft-border rounded-2xl p-6"
+              className="md:col-span-3 glass soft-border rounded-2xl p-6 glass rounded-2xl p-6"
               data-aos="fade-left"
             >
-              <h3 className="text-2xl md:text-3xl font-extrabold text-center gold-text mb-3">
+              <h3 className="text-3xl font-extrabold text-center gold-text mb-3">
                 Reviews
               </h3>
               <div className="bg-white rounded-xl border p-4 mb-3">
@@ -918,12 +936,14 @@ const Upcoming = () => {
                   Quick arrangement and great guidance by priest.
                 </p>
               </div>
+
               <div className="bg-white mt-2 rounded-xl border p-4">
                 <p className="font-semibold">Diksha – ⭐⭐⭐</p>
                 <p className="text-sm">
                   Lorem ipsum dolor sit amet consectetur.
                 </p>
               </div>
+
               <div className="bg-white mt-2 rounded-xl border p-4">
                 <p className="font-semibold"> vartika – ⭐⭐⭐⭐</p>
                 <p className="text-sm">Lorem ipsum dolor sit amet.</p>
@@ -932,26 +952,26 @@ const Upcoming = () => {
           </div>
         </section>
 
-        {/* --- Share Popup --- */}
+        {/* Share Popup */}
         <div
           id="sharePopup"
-          className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 ${
+          className={`fixed inset-0 bg-black/50 flex items-center justify-center z-50 ${
             isShareOpen ? '' : 'hidden'
           }`}
           onClick={(e) => {
             if (e.target.id === 'sharePopup') setIsShareOpen(false);
           }}
         >
-          <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-md border-t-4 border-yellow-500 animate-[fadeSlide_.4s_ease]">
+          <div className="bg-white rounded-2xl shadow-2xl p-6 w-96 border-t-4 border-yellow-500 animate-[fadeSlide_.4s_ease]">
             <h2 className="text-xl font-bold text-yellow-700 mb-3">
-              Share this Puja
+              Share this Puja{' '}
             </h2>
             <div className="flex items-center mb-4">
               <input
-                ref={pageLinkRef}
                 id="pageLink"
                 type="text"
-                value="http://127.0.0.1:5500/index.html" // This should be dynamic in a real app
+                ref={pageLinkRef}
+                defaultValue="http://127.0.0.1:5500/index.html" 
                 readOnly
                 className="flex-1 border rounded-l-lg px-3 py-2 text-sm"
               />
@@ -998,20 +1018,20 @@ const Upcoming = () => {
           </div>
         </div>
 
-        {/* --- Toast Notification --- */}
+        {/* Toast */}
         {toastMessage && (
           <div
             id="toast"
-            className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-sm px-4 py-2 rounded-full shadow-xl z-50"
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-sm px-4 py-2 rounded-full shadow-xl"
           >
             {toastMessage}
           </div>
         )}
 
-        {/* --- "You May Also Like" Carousel --- */}
-        <section className="max-w-7xl mx-auto px-6 mt-12 pb-16 relative">
+        {/* Related Carousel Section */}
+        <section className="max-w-7xl mx-auto px-6 mt-12 relative">
           <h2
-            className="text-2xl md:text-3xl font-bold mb-4 gold-text"
+            className="text-3xl font-bold mb-4 text-3xl font-extrabold gold-text mb-6"
             data-aos="fade-right"
           >
             You May Also Like
@@ -1019,24 +1039,24 @@ const Upcoming = () => {
 
           <button
             id="prevBtn"
-            className="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 bg-yellow-500 text-white w-10 h-10 items-center justify-center rounded-full shadow hover:bg-yellow-600 z-10"
+            className="absolute left-0 top-1/2 -translate-y-1/2 bg-yellow-500 text-white px-3 py-2 rounded-full shadow hover:bg-yellow-600 z-10"
             onClick={() => handleCarouselNav('prev')}
           >
             ◀
           </button>
 
           <div
-            ref={carouselRef}
             id="carousel"
-            className="flex overflow-x-auto space-x-6 scrollbar-hide scroll-smooth pb-4"
+            ref={carouselRef}
+            className="flex overflow-x-auto space-x-6 scrollbar-hide scroll-smooth flex space-x-6 overflow-x-auto scroll-smooth pb-4"
             data-aos="fade-up"
           >
-            {/* Carousel Item 1 */}
+            {/* All carousel items go here */}
             <div className="min-w-[250px] border rounded-xl p-3 text-center shadow-md">
               <img
                 src="images/main iamge.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Bagalmukhi Puja</p>
               <p className="text-red-600 font-semibold">₹1150</p>
@@ -1044,31 +1064,33 @@ const Upcoming = () => {
                 Book Now
               </button>
             </div>
-            {/* Carousel Item 2 */}
             <div className="min-w-[250px] border rounded-xl p-3 text-center shadow-md">
               <img
                 src="images/m2.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">
                 Sawan Special Vedic Yagya 2025 – In Kashi
               </p>
               <p className="text-red-600 font-semibold">
+                {' '}
                 📆 Saturday, 9 August 2025,
               </p>
               <button className="mt-2 bg-yellow-500 px-4 py-1 rounded-lg transition duration-300 transform hover:scale-105 hover:shadow-mdc hover:bg-yellow-700 text-white">
                 Book Now
               </button>
             </div>
-            {/* ... Add all other carousel items here, just like the ones above ... */}
             <div className="min-w-[250px] border rounded-xl p-3 text-center shadow-md">
               <img
                 src="images/y3.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
-              <p className="mt-2 font-bold"> Adi Lakshmi Puja (Ashta-Lakshmi)</p>
+              <p className="mt-2 font-bold">
+                {' '}
+                Adi Lakshmi Puja (Ashta-Lakshmi)
+              </p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
               <button className="mt-2 bg-yellow-500 px-4 py-1 rounded-lg transition duration-300 transform hover:scale-105 hover:shadow-mdc hover:bg-yellow-700 text-white">
                 Book Now
@@ -1078,7 +1100,7 @@ const Upcoming = () => {
               <img
                 src="images/y4.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">
                 Dhana Lakshmi Puja (Ashta-Lakshmi)
@@ -1092,7 +1114,7 @@ const Upcoming = () => {
               <img
                 src="images/y5.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">
                 Dhanya Lakshmi Puja (Ashta-Lakshmi)
@@ -1102,11 +1124,12 @@ const Upcoming = () => {
                 Book Now
               </button>
             </div>
+            {/* ... Other carousel items ... */}
             <div className="min-w-[250px] border rounded-xl p-3 text-center shadow-md">
               <img
                 src="images/y6.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">
                 Gaja Lakshmi Puja (Ashta-Lakshmi)
@@ -1120,7 +1143,7 @@ const Upcoming = () => {
               <img
                 src="images/y7.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">
                 Santana Lakshmi Puja (Ashta-Lakshmi)
@@ -1134,7 +1157,7 @@ const Upcoming = () => {
               <img
                 src="images/y8.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">
                 Dhairya Lakshmi Puja (Ashta-Lakshmi)
@@ -1148,7 +1171,7 @@ const Upcoming = () => {
               <img
                 src="images/y9.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">
                 Vijaya Lakshmi Puja (Ashta-Lakshmi)
@@ -1162,7 +1185,7 @@ const Upcoming = () => {
               <img
                 src="images/y10.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">
                 Vidya Lakshmi Puja (Ashta-Lakshmi)
@@ -1176,7 +1199,7 @@ const Upcoming = () => {
               <img
                 src="images/y11.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Surya Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1188,7 +1211,7 @@ const Upcoming = () => {
               <img
                 src="images/y12.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Chandra Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1200,7 +1223,7 @@ const Upcoming = () => {
               <img
                 src="images/y13.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Mangal Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1212,7 +1235,7 @@ const Upcoming = () => {
               <img
                 src="images/y14.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Budh Puja (Mercury Puja)</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1224,7 +1247,7 @@ const Upcoming = () => {
               <img
                 src="images/y15.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Guru Puja (Jupiter Puja)</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1236,7 +1259,7 @@ const Upcoming = () => {
               <img
                 src="images/y16.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Shukra Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1248,7 +1271,7 @@ const Upcoming = () => {
               <img
                 src="images/y17.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Shani Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1260,7 +1283,7 @@ const Upcoming = () => {
               <img
                 src="images/y18.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Rahu Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1272,7 +1295,7 @@ const Upcoming = () => {
               <img
                 src="images/y19.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Ketu Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1284,7 +1307,7 @@ const Upcoming = () => {
               <img
                 src="images/y20.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Navagraha Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1296,7 +1319,7 @@ const Upcoming = () => {
               <img
                 src="images/y21.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Vishnu Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1308,7 +1331,7 @@ const Upcoming = () => {
               <img
                 src="images/y22.jpg"
                 className="rounded-lg mx-auto w-64 h-64 object-cover transition-transform duration-500 hover:scale-110"
-                alt="Related Puja"
+                alt="Related"
               />
               <p className="mt-2 font-bold">Surya Puja</p>
               <p className="text-red-600 font-semibold">₹5100.00</p>
@@ -1318,9 +1341,10 @@ const Upcoming = () => {
             </div>
           </div>
 
+         
           <button
-            id="carouselNextBtn"
-            className="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 bg-yellow-500 text-white w-10 h-10 items-center justify-center rounded-full shadow hover:bg-yellow-600 z-10"
+            id="nextBtn" 
+            className="absolute right-0 top-1/2 -translate-y-1/2 bg-yellow-500 text-white px-3 py-2 rounded-full shadow hover:bg-yellow-600 z-10"
             onClick={() => handleCarouselNav('next')}
           >
             ▶
@@ -1330,5 +1354,6 @@ const Upcoming = () => {
     </>
   );
 };
+
 
 export default Upcoming;
