@@ -388,7 +388,7 @@ const Upcoming = () => {
                 </h3>
                 <p className="text-xl font-bold mt-1">₹851</p>
                 <img
-                  src="one_family.avif"
+                  src="/images/one_family.avif"
                   alt="Individual"
                   className="rounded-lg mt-3"
                 />
@@ -423,7 +423,7 @@ const Upcoming = () => {
               <h3 className="text-lg font-semibold">Couple Lakshmi Puja</h3>
               <p className="text-xl font-bold mt-1">₹1251</p>
               <img
-                src="two_family.avif"
+                src="/images/two_family.avif"
                 alt="Couple"
                 className="rounded-lg mt-3"
               />
@@ -457,7 +457,7 @@ const Upcoming = () => {
               <h3 className="text-lg font-semibold">Family Lakshmi Puja</h3>
               <p className="text-xl font-bold mt-1">₹1451</p>
               <img
-                src="four_family.avif"
+                src="/images/four_family.avif"
                 alt="Family"
                 className="rounded-lg mt-3"
               />
@@ -491,7 +491,7 @@ const Upcoming = () => {
               <h3 className="text-lg font-semibold">Family Lakshmi Puja</h3>
               <p className="text-xl font-bold mt-1">₹1451</p>
               <img
-                src="six_family.avif"
+                src="/images/six_family.avif"
                 alt="Family"
                 className="rounded-lg mt-3"
               />

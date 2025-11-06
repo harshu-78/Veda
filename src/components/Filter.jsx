@@ -11,12 +11,12 @@ const categories = [
     { key: "yagya", label: "Yagya Puja" },
     { key: "havan", label: "Homa | Havan" },
     { key: "japa", label: "Japa | Chanting" },
-    { key: "path", label: "Path | Recitation" },
+    { key: "path", label: "Path | Recitation" }, 
     { key: "kashiKhand", label: "Puja in Kashi" },
     { key: "dailypuja", label: "Daily Puja" },
     { key: "rudrabhishek", label: "Nitya Ati Rudrabhishek" },
     { key: "upcoming", label: "Upcoming Festival Puja" },
-    { key: "puja", label: "Puja" },
+    { key: "puja", label: "Puja" }, 
 ];
 
 export const initialPujas = [
@@ -53,8 +53,8 @@ function PujaCard({ puja }) {
     const endsInDays = useMemo(() => Math.floor(2 + Math.random() * 10), []);
 
     const linkPath = puja.category === 'upcoming' 
-        ? `/upcoming-puja/${puja.id}`   
-        : `/pujas/${puja.id}`;         
+        ? `/upcoming-puja/${puja.id}` 
+        : `/pujas/${puja.id}`;      
 
     return (
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200/80 flex flex-col transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
@@ -72,7 +72,7 @@ function PujaCard({ puja }) {
             <div className="p-4 flex flex-col flex-grow">
                 <h3 className="text-lg font-bold text-gray-800 leading-tight mb-4 flex-grow">{puja.title}</h3>
                 <div className="mt-auto">
-                  
+                    
                     <Link to={linkPath}>
                         <button className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white font-bold py-3 px-5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.03]">
                             {puja.category === 'upcoming' ? 'Participate Now' : 'Book Now'}
@@ -161,6 +161,27 @@ export default function Filter() {
                                     ) : cat.key === 'kashiKhand' ? (
                                         <Link
                                             to="/puja-in-kashi"
+                                            className={`w-full text-left block px-4 py-2.5 rounded-lg transition-all duration-300 ease-out font-semibold text-sm ${filter === cat.key ? "bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-md scale-105" : "bg-white/80 hover:bg-amber-100/70 hover:text-orange-800"}`}
+                                        >
+                                            {cat.label}
+                                        </Link>
+                                    ) : cat.key === 'dailypuja' ? ( 
+                                        <Link
+                                            to="/daily-puja" 
+                                            className={`w-full text-left block px-4 py-2.5 rounded-lg transition-all duration-300 ease-out font-semibold text-sm ${filter === cat.key ? "bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-md scale-105" : "bg-white/80 hover:bg-amber-100/70 hover:text-orange-800"}`}
+                                        >
+                                            {cat.label}
+                                        </Link>
+                                    ) : cat.key === 'path' ? ( 
+                                        <Link
+                                            to="/path-recitation"
+                                            className={`w-full text-left block px-4 py-2.5 rounded-lg transition-all duration-300 ease-out font-semibold text-sm ${filter === cat.key ? "bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-md scale-105" : "bg-white/80 hover:bg-amber-100/70 hover:text-orange-800"}`}
+                                        >
+                                            {cat.label}
+                                        </Link>
+                                    ) : cat.key === 'puja' ? ( 
+                                        <Link
+                                            to="/simple-puja" 
                                             className={`w-full text-left block px-4 py-2.5 rounded-lg transition-all duration-300 ease-out font-semibold text-sm ${filter === cat.key ? "bg-gradient-to-r from-orange-500 to-yellow-500 text-white shadow-md scale-105" : "bg-white/80 hover:bg-amber-100/70 hover:text-orange-800"}`}
                                         >
                                             {cat.label}
