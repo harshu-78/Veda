@@ -217,159 +217,195 @@ const Upcoming = () => {
           <span className="font-semibold text-red-600">Adi Lakshmi Puja</span>
         </nav>
 
-        {/* Main Section */}
-        <section className="max-w-7xl mx-auto p-6 md:p-8 grid lg:grid-cols-2 gap-8">
-          <div className="space-y-4">
-            <div
-              id="mainDisplay"
-              className="relative rounded-2xl shimmer soft-border w-full h-[500px] aspect-[6/5] overflow-hidden group"
-            >
-              {/* This part is now controlled by React state */}
-              {mainDisplay.type === 'img' ? (
-                <img
-                  id="mainImage"
-                  src={mainDisplay.src}
-                  alt="Product Image"
-                  className="w-full h-full object-cover transition duration-700 group-hover:scale-[1.03] flex space-x-3"
-                  data-aos="zoom-in"
-                  key={mainDisplay.src}
-                />
-              ) : (
-                <video
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="w-full h-full object-cover rounded-2xl"
-                  key={mainDisplay.src}
-                >
-                  <source src={mainDisplay.src} type="video/mp4" />
-                </video>
-              )}
-            </div>
+      {/* Main Section */}
+<section className="max-w-7xl mx-auto p-6 md:p-8 grid lg:grid-cols-2 gap-8">
+  <div className="space-y-4">
+    <div
+      id="mainDisplay"
+      className="relative rounded-2xl shimmer soft-border w-full h-[500px] aspect-[6/5] overflow-hidden group"
+    >
+      {/* This part is now controlled by React state */}
+      {mainDisplay.type === 'img' ? (
+        <img
+          id="mainImage"
+          src={mainDisplay.src}
+          alt="Product Image"
+          className="w-full h-full object-cover transition duration-700 group-hover:scale-[1.03] flex space-x-3"
+          data-aos="zoom-in"
+          key={mainDisplay.src}
+        />
+      ) : (
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover rounded-2xl"
+          key={mainDisplay.src}
+        >
+          <source src={mainDisplay.src} type="video/mp4" />
+        </video>
+      )}
+    </div>
 
-            {/* Thumbnails row */}
-            <div
-              id="thumbRow"
-              className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-7 gap-3 flex space-x-3"
-              data-aos="zoom-in"
-            >
-              <img
-                src="images/main iamge.jpg"
-                className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
-                alt="thumbnail"
-                onClick={(e) => handleThumbClick(e.target)}
-              />
-              <img
-                src="images/m2.jpg"
-                className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
-                alt="thumbnail"
-                onClick={(e) => handleThumbClick(e.target)}
-              />
-              <video
-                src="images/video1.mp4"
-                className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
-                muted
-                onClick={(e) => handleThumbClick(e.target)}
-              ></video>
-              <img
-                src="images/bagagalmukhi yantra.webp"
-                className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
-                alt="thumbnail"
-                onClick={(e) => handleThumbClick(e.target)}
-              />
-              <img
-                src="images/B-Y2.webp"
-                className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
-                alt="thumbnail"
-                onClick={(e) => handleThumbClick(e.target)}
-              />
-            </div>
+    {/* Thumbnails row */}
+    <div
+      id="thumbRow"
+      className="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-7 gap-3 flex space-x-3"
+      data-aos="zoom-in"
+    >
+      <img
+        src="images/main iamge.jpg"
+        className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
+        alt="thumbnail"
+        onClick={(e) => handleThumbClick(e.target)}
+      />
+      <img
+        src="images/m2.jpg"
+        className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
+        alt="thumbnail"
+        onClick={(e) => handleThumbClick(e.target)}
+      />
+      <video
+        src="images/video1.mp4"
+        className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
+        muted
+        onClick={(e) => handleThumbClick(e.target)}
+      ></video>
+      <img
+        src="images/bagagalmukhi yantra.webp"
+        className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
+        alt="thumbnail"
+        onClick={(e) => handleThumbClick(e.target)}
+      />
+      <img
+        src="images/B-Y2.webp"
+        className="thumb w-full aspect-square object-cover rounded-xl cursor-pointer border-2 border-transparent hover:border-yellow-600 transition"
+        alt="thumbnail"
+        onClick={(e) => handleThumbClick(e.target)}
+      />
+    </div>
+  </div>
+
+  {/* Product Details Card */}
+  <div className="glass soft-border rounded-2xl w-full h-[500px] p-6 md:p-8 fadeSlide">
+    <div
+      className="flex items-start justify-between gap-4 glass rounded-2xl p-6"
+      data-aos="fade-left"
+    >
+      <div>
+        <p className="uppercase tracking-wide text-gray-500 text-xs">
+          Yagya Puja
+        </p>
+        <h1
+          className="text-3xl md:text-4xl font-extrabold mt-1 gold-text text-3xl font-extrabold gold-text mb-6"
+          data-aos="fade-down"
+        >
+          Adi Lakshmi Puja
+        </h1>
+        <div className="flex items-center gap-3 mt-2">
+          <div className="flex items-center text-yellow-600">
+            ★★★★★
           </div>
+          <span className="text-xs text-gray-500">(150 reviews)</span>
+        </div>
+      </div>
+      <div className="flex items-center gap-3">
+        <button
+          id="favBtn"
+          className={`w-11 h-11 border rounded-full flex items-center justify-center hover:bg-red-50 transition ${
+            isFavorite ? 'text-red-600' : 'hover:text-red-600'
+          }`}
+          onClick={handleFavToggle}
+        >
+          ❤️
+        </button>
+        <button
+          id="shareBtn"
+          className="w-11 h-11 border rounded-full flex items-center justify-center hover:bg-yellow-50 hover:text-yellow-700 transition"
+          onClick={() => setIsShareOpen(true)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            className="w-5 h-5 fill-current"
+          >
+            <path d="M18 8a3 3 0 1 0-2.82-4H14a2 2 0 0 0-2 2v7.23l-2.4-1.2a3 3 0 1 0-.9 1.79l3.74 1.87A2 2 0 0 0 15 15V6h.18A3 3 0 0 0 18 8Z" />
+          </svg>
+        </button>
+      </div>
+    </div>
 
-          {/* Product Details Card */}
-          <div className="glass soft-border rounded-2xl w-full h-[500px] p-6 md:p-8 fadeSlide">
-            <div
-              className="flex items-start justify-between gap-4 glass rounded-2xl p-6"
-              data-aos="fade-left"
-            >
-              <div>
-                <p className="uppercase tracking-wide text-gray-500 text-xs">
-                  Yagya Puja
-                </p>
-                <h1
-                  className="text-3xl md:text-4xl font-extrabold mt-1 gold-text text-3xl font-extrabold gold-text mb-6"
-                  data-aos="fade-down"
-                >
-                  Adi Lakshmi Puja
-                </h1>
-                <div className="flex items-center gap-3 mt-2">
-                  <div className="flex items-center text-yellow-600">
-                    ★★★★★
-                  </div>
-                  <span className="text-xs text-gray-500">(150 reviews)</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <button
-                  id="favBtn"
-                  className={`w-11 h-11 border rounded-full flex items-center justify-center hover:bg-red-50 transition ${
-                    isFavorite ? 'text-red-600' : 'hover:text-red-600'
-                  }`}
-                  onClick={handleFavToggle}
-                >
-                  ❤️
-                </button>
-                <button
-                  id="shareBtn"
-                  className="w-11 h-11 border rounded-full flex items-center justify-center hover:bg-yellow-50 hover:text-yellow-700 transition"
-                  onClick={() => setIsShareOpen(true)}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 24 24"
-                    className="w-5 h-5 fill-current"
-                  >
-                    <path d="M18 8a3 3 0 1 0-2.82-4H14a2 2 0 0 0-2 2v7.23l-2.4-1.2a3 3 0 1 0-.9 1.79l3.74 1.87A2 2 0 0 0 15 15V6h.18A3 3 0 0 0 18 8Z" />
-                  </svg>
-                </button>
-              </div>
-            </div>
+    {/* Offer countdown */}
+    <div className="mt-4 bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-800 px-4 py-3 rounded-xl shadow flex items-center justify-between gap-3">
+      <div className="font-semibold">
+        Booking closes in: 01/11/25 – 20/11/25
+      </div>
+      <div id="countdown" className="text-xs font-bold">
+        {countdown}
+      </div>
+    </div>
 
-            {/* Offer countdown */}
-            <div className="mt-4 bg-gradient-to-r from-yellow-100 to-amber-100 text-yellow-800 px-4 py-3 rounded-xl shadow flex items-center justify-between gap-3">
-              <div className="font-semibold">
-                Booking closes in: 01/11/25 – 20/11/25
-              </div>
-              <div id="countdown" className="text-xs font-bold">
-                {countdown}
-              </div>
-            </div>
+    {/* Trust badges */}
+    <div className="mt-4 grid grid-cols-3 gap-3 text-center text-xs">
+      <div className="bg-white rounded-xl border p-3 hover:scale-105 hover:shadow-md hover:bg-yellow-500">
+        ✅ Certified Priests
+      </div>
+      <div className="bg-white rounded-xl border p-3 hover:scale-105 hover:shadow-md hover:bg-yellow-500">
+        🕉️ Vedic Rituals
+      </div>
+      <div className="bg-white rounded-xl border p-3 hover:scale-105 hover:shadow-md hover:bg-yellow-500">
+        🚚 Prasad Delivery
+      </div>
+    </div>
 
-            {/* Trust badges */}
-            <div className="mt-4 grid grid-cols-3 gap-3 text-center text-xs">
-              <div className="bg-white rounded-xl border p-3 hover:scale-105 hover:shadow-md hover:bg-yellow-500">
-                ✅ Certified Priests
-              </div>
-              <div className="bg-white rounded-xl border p-3 hover:scale-105 hover:shadow-md hover:bg-yellow-500">
-                🕉️ Vedic Rituals
-              </div>
-              <div className="bg-white rounded-xl border p-3 hover:scale-105 hover:shadow-md hover:bg-yellow-500">
-                🚚 Prasad Delivery
-              </div>
-            </div>
+    {/* --- Added Devotee Count and Images --- */}
+    <div className="mt-6">
+      <p className="text-sm text-gray-700 font-semibold mb-3">
+        1,00,000+ devotees have joined the Pujas organized by VedaStructure 🙏🏻
+      </p>
+      <div className="flex -space-x-4">
+        <img
+          className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800 object-cover"
+          src="/images/devotee1.webp" // Replace with actual devotee image paths
+          alt="Devotee 1"
+        />
+        <img
+          className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800 object-cover"
+          src="/images/devotee2.webp"
+          alt="Devotee 2"
+        />
+        <img
+          className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800 object-cover"
+          src="/images/devotee3.webp"
+          alt="Devotee 3"
+        />
+        <img
+          className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-800 object-cover"
+          src="/images/devotee4.webp"
+          alt="Devotee 4"
+        />
+        <a
+  className="flex items-center justify-center w-10 h-10 text-xs font-medium text-white bg-orange-500 border-2 border-white rounded-full hover:bg-orange-600"
+  href="#"
+>
+  +99
+</a>
+      </div>
+    </div>
+    {/* -------------------------------------- */}
 
-            <a href="#participate-section">
-              {' '}
-              <button
-                id="bookBtn"
-                className="mt-6 w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-amber-300/40 transition transform active:scale-[.98] hover:scale-105 hover:shadow-mdc hover:bg-orange-700"
-              >
-                Participate in Puja
-              </button>
-            </a>
-          </div>
-        </section>
+    <a href="#participate-section">
+      {' '}
+      <button
+        id="bookBtn"
+        className="mt-6 w-full bg-orange-500 hover:bg-orange-700 text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-amber-300/40 transition transform active:scale-[.98] hover:scale-105 hover:shadow-mdc hover:bg-orange-700"
+      >
+        Participate in Puja
+      </button>
+    </a>
+  </div>
+</section>
 
         <h3
           id="participate-section"
@@ -378,147 +414,151 @@ const Upcoming = () => {
           4 Ways to Participate
         </h3>
 
-        <div className=" mt-8 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 md:px-6">
-          {/* Card 1 */}
-          <div className="max-w-sm mx-auto">
-            <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
-              <div className="bg-gradient-to-r from-red-600 to-orange-500 text-white p-4 text-left">
-                <h3 className="text-lg font-semibold">
-                  Individual Lakshmi Puja
-                </h3>
-                <p className="text-xl font-bold mt-1">₹851</p>
-                <img
-                  src="/images/one_family.avif"
-                  alt="Individual"
-                  className="rounded-lg mt-3"
-                />
-              </div>
-              <div className="p-5 space-y-3 text-gray-700 text-sm">
-                <p>🔸 Link for Recorded video of Lakshmi Puja</p>
-                <p>
-                  🔸 Individual’s Name and Gotra will be chanted during the Puja
-                  Sankalp
-                </p>
-                <p>
-                  🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and
-                  the video of the Offerings will be shared with you
-                </p>
-                <p>🔸 Prasad will be shipped to your home</p>
-              </div>
-              <div className="p-4 text-center">
-                <button
-                  data-participants="1"
-                  className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
-                  onClick={() => openModalWithParticipants(1)}
-                >
-                  PARTICIPATE
-                </button>
-              </div>
-            </div>
-          </div>
+       <div className=" mt-8 max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 px-4 md:px-6">
+  {/* Card 1 */}
+  <div className="max-w-sm mx-auto">
+    <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
+      {/* YAHAN BADLAAV KIYA HAI (p-4 -> pt-4 px-4) */}
+      <div className="bg-gradient-to-r from-red-600 to-orange-500 text-white pt-4 px-4 text-left">
+        <h3 className="text-lg font-semibold">
+          Individual Lakshmi Puja
+        </h3>
+        <p className="text-xl font-bold mt-1">₹851</p>
+        <img
+          src="/images/one_family.avif"
+          alt="Individual"
+          className="rounded-lg mt-3"
+        />
+      </div>
+      <div className="p-5 space-y-3 text-gray-700 text-sm">
+        <p>🔸 Link for Recorded video of Lakshmi Puja</p>
+        <p>
+          🔸 Individual’s Name and Gotra will be chanted during the Puja
+          Sankalp
+        </p>
+        <p>
+          🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and
+          the video of the Offerings will be shared with you
+        </p>
+        <p>🔸 Prasad will be shipped to your home</p>
+      </div>
+      <div className="p-4 text-center">
+        <button
+          data-participants="1"
+          className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
+          onClick={() => openModalWithParticipants(1)}
+        >
+          PARTICIPATE
+        </button>
+      </div>
+    </div>
+  </div>
 
-          {/* Card 2 */}
-          <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
-            <div className="bg-gradient-to-r from-pink-600 to-orange-500 text-white p-4 text-left">
-              <h3 className="text-lg font-semibold">Couple Lakshmi Puja</h3>
-              <p className="text-xl font-bold mt-1">₹1251</p>
-              <img
-                src="/images/two_family.avif"
-                alt="Couple"
-                className="rounded-lg mt-3"
-              />
-            </div>
-            <div className="p-5 space-y-3 text-gray-700 text-sm">
-              <p>🔸 Link for Recorded video of Lakshmi Puja</p>
-              <p>
-                🔸 2 Devotee Name and Gotra will be chanted during the Puja
-                Sankalp
-              </p>
-              <p>
-                🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and the
-                video of the Offerings will be shared with you
-              </p>
-              <p>🔸 Prasad will be shipped to your home</p>
-            </div>
-            <div className="p-4 text-center">
-              <button
-                data-participants="2"
-                className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
-                onClick={() => openModalWithParticipants(2)}
-              >
-                PARTICIPATE
-              </button>
-            </div>
-          </div>
+  {/* Card 2 */}
+  <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
+    {/* YAHAN BADLAAV KIYA HAI (p-4 -> pt-4 px-4) */}
+    <div className="bg-gradient-to-r from-pink-600 to-orange-500 text-white pt-4 px-4 text-left">
+      <h3 className="text-lg font-semibold">Couple Lakshmi Puja</h3>
+      <p className="text-xl font-bold mt-1">₹1251</p>
+      <img
+        src="/images/two_family.avif"
+        alt="Couple"
+        className="rounded-lg mt-3"
+      />
+    </div>
+    <div className="p-5 space-y-3 text-gray-700 text-sm">
+      <p>🔸 Link for Recorded video of Lakshmi Puja</p>
+      <p>
+        🔸 2 Devotee Name and Gotra will be chanted during the Puja
+        Sankalp
+      </p>
+      <p>
+        🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and the
+        video of the Offerings will be shared with you
+      </p>
+      <p>🔸 Prasad will be shipped to your home</p>
+    </div>
+    <div className="p-4 text-center">
+      <button
+        data-participants="2"
+        className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
+        onClick={() => openModalWithParticipants(2)}
+      >
+        PARTICIPATE
+      </button>
+    </div>
+  </div>
 
-          {/* Card 3 */}
-          <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
-            <div className="bg-gradient-to-r from-orange-600 to-red-400 text-white p-4 text-left">
-              <h3 className="text-lg font-semibold">Family Lakshmi Puja</h3>
-              <p className="text-xl font-bold mt-1">₹1451</p>
-              <img
-                src="/images/four_family.avif"
-                alt="Family"
-                className="rounded-lg mt-3"
-              />
-            </div>
-            <div className="p-5 space-y-3 text-gray-700 text-sm">
-              <p>🔸 Link for Recorded video of Lakshmi Puja</p>
-              <p>
-                🔸 4 Devotee Name and Gotra will be chanted during the Puja
-                Sankalp
-              </p>
-              <p>
-                🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and the
-                video of the Offerings will be shared with you
-              </p>
-              <p>🔸 Prasad will be shipped to your home</p>
-            </div>
-            <div className="p-4 text-center">
-              <button
-                data-participants="4"
-                className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
-                onClick={() => openModalWithParticipants(4)}
-              >
-                PARTICIPATE
-              </button>
-            </div>
-          </div>
+  {/* Card 3 */}
+  <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
+    {/* YAHAN BADLAAV KIYA HAI (p-4 -> pt-4 px-4) */}
+    <div className="bg-gradient-to-r from-orange-600 to-red-400 text-white pt-4 px-4 text-left">
+      <h3 className="text-lg font-semibold">Family Lakshmi Puja</h3>
+      <p className="text-xl font-bold mt-1">₹1451</p>
+      <img
+        src="/images/four_family.avif"
+        alt="Family"
+        className="rounded-lg mt-3"
+      />
+    </div>
+    <div className="p-5 space-y-3 text-gray-700 text-sm">
+      <p>🔸 Link for Recorded video of Lakshmi Puja</p>
+      <p>
+        🔸 4 Devotee Name and Gotra will be chanted during the Puja
+        Sankalp
+      </p>
+      <p>
+        🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and the
+        video of the Offerings will be shared with you
+      </p>
+      <p>🔸 Prasad will be shipped to your home</p>
+    </div>
+    <div className="p-4 text-center">
+      <button
+        data-participants="4"
+        className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
+        onClick={() => openModalWithParticipants(4)}
+      >
+        PARTICIPATE
+      </button>
+    </div>
+  </div>
 
-          {/* Card 4 */}
-          <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
-            <div className="bg-gradient-to-r from-orange-600 to-red-400 text-white p-4 text-left">
-              <h3 className="text-lg font-semibold">Family Lakshmi Puja</h3>
-              <p className="text-xl font-bold mt-1">₹1451</p>
-              <img
-                src="/images/six_family.avif"
-                alt="Family"
-                className="rounded-lg mt-3"
-              />
-            </div>
-            <div className="p-5 space-y-3 text-gray-700 text-sm">
-              <p>🔸 Link for Recorded video of Lakshmi Puja</p>
-              <p>
-                🔸 6 Devotee Name and Gotra will be chanted during the Puja
-                Sankalp
-              </p>
-              <p>
-                🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and the
-                video of the Offerings will be shared with you
-              </p>
-              <p>🔸 Prasad will be shipped to your home</p>
-            </div>
-            <div className="p-4 text-center">
-              <button
-                data-participants="6"
-                className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
-                onClick={() => openModalWithParticipants(6)}
-              >
-                PARTICIPATE
-              </button>
-            </div>
-          </div>
-        </div>
+  {/* Card 4 */}
+  <div className="border-2 border-orange-200 rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition bg-white">
+    {/* YAHAN BADLAAV KIYA HAI (p-4 -> pt-4 px-4) */}
+    <div className="bg-gradient-to-r from-orange-600 to-red-400 text-white pt-4 px-4 text-left">
+      <h3 className="text-lg font-semibold">Joint Family Lakshmi Puja</h3>
+      <p className="text-xl font-bold mt-1">₹1551</p>
+      <img
+        src="/images/six_family.avif"
+        alt="Family"
+        className="rounded-lg mt-3"
+      />
+    </div>
+    <div className="p-5 space-y-3 text-gray-700 text-sm">
+      <p>🔸 Link for Recorded video of Lakshmi Puja</p>
+      <p>
+        🔸 6 Devotee Name and Gotra will be chanted during the Puja
+        Sankalp
+      </p>
+      <p>
+        🔸 You can choose to offer Vastra & Bhog to Lakshmi Mata and the
+        video of the Offerings will be shared with you
+      </p>
+      <p>🔸 Prasad will be shipped to your home</p>
+    </div>
+    <div className="p-4 text-center">
+      <button
+        data-participants="6"
+        className="open-modal-btn bg-orange-500 hover:bg-orange-600 text-white font-semibold w-full py-2 rounded-lg transition"
+        onClick={() => openModalWithParticipants(6)}
+      >
+        PARTICIPATE
+      </button>
+    </div>
+  </div>
+</div>
 
         {/* --- Form Modal --- */}
         <div
@@ -799,37 +839,81 @@ const Upcoming = () => {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-3 mt-4 gap-6">
-            <div
-              className="md:col-span-3 glass soft-border rounded-2xl p-6 glass rounded-2xl p-6"
-              data-aos="fade-left"
-            >
-              <h3 className="text-3xl font-extrabold gold-text text-center mb-3">
-                Benefits
-              </h3>
-              <ul className="list-disc list-inside space-y-2 text-sm">
-                <li className="font-medium mt-4">
-                  Material Prosperity: Ensures wealth, abundance, and financial
-                  security.
-                </li>
-                <li className="font-medium mt-4">
-                  Emotional Well-being: Promotes happiness and mental peace.
-                </li>
-                <li className="font-medium mt-4">
-                  Health and Longevity: Protects against illness and ensures
-                  vitality.
-                </li>
-                <li className="font-medium mt-4">
-                  Success in Endeavors: Helps overcome challenges in career,
-                  business, and education.
-                </li>
-                <li className="font-medium mt-4">
-                  Spiritual Growth: Enhances devotion, focus, and connection
-                  with divine energies.
-                </li>
-              </ul>
-            </div>
-          </div>
+         <div className="grid md:grid-cols-3 mt-4 gap-6">
+  <div
+    className="md:col-span-3 glass soft-border rounded-2xl p-6"
+    data-aos="fade-left"
+  >
+    <h3 className="text-3xl font-extrabold gold-text text-center mb-6">
+      Benefits of this Puja
+    </h3>
+
+    {/* Naya Horizontal Scroll Design Yahan Se */}
+    <div className="flex gap-4 overflow-x-auto pb-4">
+      {/* Card 1 */}
+      <div className="min-w-[280px] bg-white/70 p-5 rounded-xl shadow border border-yellow-200">
+        <div className="w-12 h-12 flex items-center justify-center rounded-full bg-orange-500 text-white mb-3">
+          {/* Icon (Example: Money) */}
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M12 18c-1.657 0-3-.895-3-2s1.343-2 3-2 3-.895 3-2-1.343-2-3-2"></path></svg>
+        </div>
+        <h4 className="font-bold text-orange-600 mb-1">Material Prosperity</h4>
+        <p className="text-sm text-gray-700">
+          Ensures wealth, abundance, and financial security.
+        </p>
+      </div>
+      
+      {/* Card 2 */}
+      <div className="min-w-[280px] bg-white/70 p-5 rounded-xl shadow border border-yellow-200">
+        <div className="w-12 h-12 flex items-center justify-center rounded-full bg-orange-500 text-white mb-3">
+          {/* Icon (Example: Heart) */}
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+        </div>
+        <h4 className="font-bold text-orange-600 mb-1">Emotional Well-being</h4>
+        <p className="text-sm text-gray-700">
+          Promotes happiness and mental peace.
+        </p>
+      </div>
+
+      {/* Card 3 */}
+      <div className="min-w-[280px] bg-white/70 p-5 rounded-xl shadow border border-yellow-200">
+        <div className="w-12 h-12 flex items-center justify-center rounded-full bg-orange-500 text-white mb-3">
+          {/* Icon (Example: Health) */}
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 21c-3.6 0-6.6-2.9-6.6-6.4C5.4 11.1 12 4.5 12 4.5s6.6 6.6 6.6 10.1c0 3.5-3 6.4-6.6 6.4z"></path></svg>
+        </div>
+        <h4 className="font-bold text-orange-600 mb-1">Health and Longevity</h4>
+        <p className="text-sm text-gray-700">
+          Protects against illness and ensures vitality.
+        </p>
+      </div>
+
+      {/* Card 4 */}
+      <div className="min-w-[280px] bg-white/70 p-5 rounded-xl shadow border border-yellow-200">
+        <div className="w-12 h-12 flex items-center justify-center rounded-full bg-orange-500 text-white mb-3">
+          {/* Icon (Example: Success) */}
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        </div>
+        <h4 className="font-bold text-orange-600 mb-1">Success in Endeavors</h4>
+        <p className="text-sm text-gray-700">
+          Helps overcome challenges in career, business, and education.
+        </p>
+      </div>
+
+      {/* Card 5 */}
+      <div className="min-w-[280px] bg-white/70 p-5 rounded-xl shadow border border-yellow-200">
+        <div className="w-12 h-12 flex items-center justify-center rounded-full bg-orange-500 text-white mb-3">
+          {/* Icon (Example: Spiritual) */}
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 18.657A8 8 0 016.343 7.343m11.314 11.314A8 8 0 016.343 7.343"></path></svg>
+        </div>
+        <h4 className="font-bold text-orange-600 mb-1">Spiritual Growth</h4>
+        <p className="text-sm text-gray-700">
+          Enhances devotion, focus, and connection with divine energies.
+        </p>
+      </div>
+    </div>
+    {/* Naya Design Yahan Tak */}
+
+  </div>
+</div>
 
           <div className="grid md:grid-cols-3 mt-4 gap-6">
             <div
